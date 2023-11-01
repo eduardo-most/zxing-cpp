@@ -152,39 +152,11 @@ if (BUILD_WRITERS)
 endif()
 
 # define subset of public headers that get distributed with the binaries
-set (PUBLIC_HEADERS
-    src/BarcodeFormat.h
-    src/BitHacks.h
-    src/ByteArray.h
-    src/CharacterSet.h
-    src/Flags.h
-    src/GTIN.h
-    src/TextUtfEncoding.h # [[deprecated]]
-    src/ZXAlgorithms.h
-    src/ZXConfig.h
-)
-if (BUILD_READERS)
-    set (PUBLIC_HEADERS ${PUBLIC_HEADERS}
-        src/Content.h
-        src/DecodeHints.h
-        src/Error.h
-        src/ImageView.h
-        src/Point.h
-        src/Quadrilateral.h
-        src/ReadBarcode.h
-        src/Result.h
-        src/StructuredAppend.h
-    )
-endif()
-if (BUILD_WRITERS)
-    set (PUBLIC_HEADERS ${PUBLIC_HEADERS}
-        src/BitMatrix.h
-        src/BitMatrixIO.h
-        src/Matrix.h
-        src/MultiFormatWriter.h
-        src/Range.h
-    )
-endif()
+file(GLOB COMMON_HEADERS LIST_DIRECTORIES false src/*.h)
+file(GLOB QRCODE_HEADERS LIST_DIRECTORIES false src/qrcode/*.h)
+file(GLOB PDF417_HEADERS LIST_DIRECTORIES false src/pdf417/*.h)
+
+set (PUBLIC_HEADERS ${COMMON_HEADERS} ${QRCODE_HEADERS} ${PDF417_HEADERS})
 # end of public header set
 
 set (AZTEC_FILES
